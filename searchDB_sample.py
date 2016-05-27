@@ -1,7 +1,7 @@
 import sqlite3
 
 conn = sqlite3.connect("/tmp/animal.db")
-#conn.row_factory = sqlite3.Row
+# conn.row_factory = sqlite3.Row
 cur = conn.cursor()
 
 name = input()
