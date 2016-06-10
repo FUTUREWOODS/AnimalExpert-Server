@@ -20,7 +20,7 @@ def animal_name_search():
     r = cur.fetchall()
     keyword = ""
     for i in range(len(r)):
-	keyword += r[i][0] + ";"
+	    keyword += r[i][0] + ";"
     return keyword
 
 @app.route("/<name>")
