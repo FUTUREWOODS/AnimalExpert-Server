@@ -13,29 +13,29 @@ def dict_factory(cursor, row):
     return d
 
 
+@app.route("/getAnimalname")
+def animal_name_search():
+    conn = sqlite3.connect("./animal.db")
+    cur = conn.execute('SELECT name FROM animals')
+    r = cur.fetchall()
+    keyword = ""
+    for i in range(len(r)):
+	keyword += r[i][0] + ";"
+    return keyword
 
 @app.route("/<name>")
 def search(name):
-    if name == "getAnimalname": 
-        conn = sqlite3.connect("./animal.db")
-        cur = conn.execute('SELECT name FROM animals')
-        r = cur.fetchall()
-        keyword = ""
-        for i in range(len(r)):
-	    keyword += r[i][0] + ";"
-        return keyword
-    else: 
-        conn = sqlite3.connect("./animal.db")
-        conn.row_factory = dict_factory
-	sql = "SELECT * FROM animals WHERE name LIKE ?"
-        cur = conn.cursor()
-        cur.execute(sql, ['%' + name + '%'])
-        res = cur.fetchall()
-        # return '\n'.join(str(res))
-        dic = {}
-        for i, d in enumerate(res):
-            dic[i] = d
-        return jsonify(dic)
+    conn = sqlite3.connect("./animal.db")
+    conn.row_factory = dict_factory
+    sql = "SELECT * FROM animals WHERE name LIKE ?"
+    cur = conn.cursor()
+    cur.execute(sql, ['%' + name + '%'])
+    res = cur.fetchall()
+    # return '\n'.join(str(res))
+    dic = {}
+    for i, d in enumerate(res):
+        dic[i] = d
+    return jsonify(dic)
 
 
 if __name__ == "__main__":
