@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, jsonify
 import sqlite3
-
+import types
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 
@@ -11,6 +12,16 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 
+
+@app.route("/getAnimalname")
+def animal_name_search():
+    conn = sqlite3.connect("./animal.db")
+    cur = conn.execute('SELECT name FROM animals')
+    r = cur.fetchall()
+    keyword = ""
+    for i in range(len(r)):
+	    keyword += r[i][0] + ";"
+    return keyword
 
 @app.route("/<name>")
 def search(name):
@@ -28,4 +39,4 @@ def search(name):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False)
+   app.run(host='0.0.0.0', debug=False)
