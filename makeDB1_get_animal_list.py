@@ -48,10 +48,10 @@ def get_all_search_list():
 conn = sqlite3.connect("./animal.db")
 cur = conn.cursor()
 cur.execute(
-    "CREATE TABLE IF NOT EXISTS animals("
+    "CREATE TABLE animals("
     "id INT PRIMARY KEY, name TEXT,taxonomy_order TEXT, taxonomy_family TEXT,"
     "zoo TEXT, habitat TEXT, size TEXT,feed TEXT, description TEXT,"
-    "img_url TEXT, cry_url TEXT, movie_url TEXT)")
+    "img_url TEXT, cry_url TEXT, movie_url TEXT,longitude REAL, latitude REAL)")
 
 
 total_cnt = get_all_search_list()
